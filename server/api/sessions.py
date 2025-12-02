@@ -96,3 +96,16 @@ def get_session(session_id: UUID, db: Session = Depends(get_db)):
             "segments": segments
         }
     )
+
+@router.delete("/sessions/{session_id}")
+def delete_session(session_id: UUID, db: Session = Depends(get_db)):
+    """Delete a session"""
+    session = db.query(DBSession).filter(DBSession.id == session_id).first()
+    
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    db.delete(session)
+    db.commit()
+    
+    return {"message": "Session deleted successfully"}
