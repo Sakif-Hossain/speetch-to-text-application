@@ -3,9 +3,6 @@ from database import settings
 import numpy as np
 import io
 import wave
-import subprocess
-import tempfile
-import os
 
 class TranscriptionService:
     def __init__(self):
@@ -34,6 +31,7 @@ class TranscriptionService:
 
         return results, info
     
+    # Wrote this with the help of: https://stackoverflow.com/questions/66296066/python-3-convert-wave-data-byte-array-to-numpy-array-of-floating-point-values
     def _bytes_to_array(self, audio_bytes: bytes):
         """Convert audio bytes to numpy array"""
         # Check if data is too small
@@ -41,7 +39,7 @@ class TranscriptionService:
             raise ValueError(f"Audio data too small: {len(audio_bytes)} bytes")
         
         try:
-            # Read as WAV (now coming from browser in WAV format)
+            # Read as WAV
             with io.BytesIO(audio_bytes) as audio_file:
                 with wave.open(audio_file, 'rb') as wav_file:
                     audio_data = wav_file.readframes(wav_file.getnframes())
