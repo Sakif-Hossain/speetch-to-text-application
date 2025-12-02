@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Numeric, Boolean, DateTime, Text, ForeignKey
+from sqlalchemy import Column, String, Integer, Numeric, DateTime, Text, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -26,9 +26,7 @@ class Transcript(Base):
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     session_id = Column(UUID(as_uuid=True), ForeignKey("sessions.id", ondelete="CASCADE"), nullable=False)
-    sequence_number = Column(Integer, nullable=False)
     text = Column(Text, nullable=False)
-    is_partial = Column(Boolean, default=False, nullable=False)
     timestamp_start = Column(Numeric(10, 3))
     timestamp_end = Column(Numeric(10, 3))
     created_at = Column(DateTime, default=datetime.utcnow)

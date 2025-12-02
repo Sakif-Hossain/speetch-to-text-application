@@ -5,7 +5,6 @@ from uuid import UUID
 from decimal import Decimal
 
 class TranscriptSegment(BaseModel):
-    sequence: int
     text: str
     timestamp_start: Optional[Decimal]
     timestamp_end: Optional[Decimal]
