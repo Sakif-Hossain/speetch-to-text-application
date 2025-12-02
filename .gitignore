@@ -37,6 +37,7 @@ next-env.d.ts
 
 server/venv
 *__pycache__
+.pytest_cache
 
 # The following file was used locally to test the backend API
 server/testClient.html
