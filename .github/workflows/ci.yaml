@@ -1,0 +1,77 @@
+name: CI - Run Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  client-tests:
+    name: Client Tests (Next.js)
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test 2>&1 | tee test-results.txt
+
+      - name: Upload client test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: client-test-results
+          path: client/test-results.txt
+
+  server-tests:
+    name: Server Tests (Python)
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: server/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio
+
+      - name: Run tests
+        run: python -m pytest tests/ -v 2>&1 | tee test-results.txt
+
+      - name: Upload server test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: server-test-results
+          path: server/test-results.txt
