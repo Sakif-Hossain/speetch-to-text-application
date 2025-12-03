@@ -9,7 +9,14 @@ export function SessionList({
   onDelete: (id: string) => void;
   onView: (id: string) => void;
 }) {
-  if (sessions.length === 0) return null;
+  if (sessions.length === 0)
+    return (
+      <div>
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">
+          No previous sessions
+        </h1>
+      </div>
+    );
 
   return (
     <div className="mt-12">

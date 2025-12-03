@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { Mic, MicOff, X } from "lucide-react";
 import { TranscriptionDisplay } from "./components/TranscriptionDisplay";
@@ -92,8 +93,20 @@ export default function TranscriptionApp() {
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           {/* Header */}
-          <div className="bg-linear-to-r from-blue-600 to-indigo-600 p-8 text-white">
-            <h1 className="text-4xl font-bold mb-2">Live Transcription</h1>
+          <div className="bg-linear-to-r from-blue-300 to-cyan-300 p-8 text-white">
+            <div className="flex items-center justify-center gap-5">
+              <Image
+                src="/textify.png"
+                width={70}
+                height={70}
+                alt="Textify logo"
+                className="rounded-full shadow-lg border-2 border-black"
+              />
+              <div>
+                <h1 className="text-4xl font-bold tracking-tight">Textify</h1>
+                <p className="text-shadow-white mt-1">Turn speech into text</p>
+              </div>
+            </div>
           </div>
 
           <div className="p-8">
@@ -123,7 +136,6 @@ export default function TranscriptionApp() {
             <TranscriptionDisplay
               partialText={partialText}
               finalText={finalText}
-              wordCount={wordCount}
               isRecording={isRecording}
             />
 
@@ -161,9 +173,7 @@ export default function TranscriptionApp() {
                           </p>
                         </div>
                         <div>
-                          <span className="text-gray-700 text-lg">
-                            Ended:
-                          </span>
+                          <span className="text-gray-700 text-lg">Ended:</span>
                           <p className="font-medium text-black">
                             {selectedSession.session.ended_at
                               ? new Date(
@@ -173,9 +183,7 @@ export default function TranscriptionApp() {
                           </p>
                         </div>
                         <div>
-                          <span className="text-gray-700 text-lg">
-                            Status:
-                          </span>
+                          <span className="text-gray-700 text-lg">Status:</span>
                           <p className="font-medium text-black">
                             {selectedSession.session.status}
                           </p>

@@ -10,7 +10,6 @@ type TranscriptionDisplayProps = {
 export function TranscriptionDisplay({
   partialText,
   finalText,
-  wordCount,
   isRecording,
 }: TranscriptionDisplayProps) {
   if (!partialText && !finalText && !isRecording) {
@@ -22,13 +21,6 @@ export function TranscriptionDisplay({
     );
   }
 
-  const displayWordCount =
-    wordCount != null
-      ? wordCount
-      : finalText
-      ? finalText.trim().split(/\s+/).filter(Boolean).length
-      : 0;
-
   return (
     <div className="space-y-6">
       {partialText && (
@@ -38,11 +30,6 @@ export function TranscriptionDisplay({
       )}
       {finalText && (
         <div className="bg-green-50 rounded-lg p-6 border-2 border-green-200">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs px-3 py-1 rounded-full bg-white text-green-800 border border-green-200">
-              {displayWordCount} words
-            </span>
-          </div>
           <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">
             {finalText}
           </p>
