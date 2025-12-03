@@ -32,7 +32,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm test -- --ci --reporters=default --reporters=jest-junit 2>&1 | tee test-results.txt
+        run: npm run test 2>&1 | tee test-results.txt
 
       - name: Upload client test results
         uses: actions/upload-artifact@v4
